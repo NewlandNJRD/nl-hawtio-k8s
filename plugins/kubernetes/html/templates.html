@@ -1,0 +1,90 @@
+<div ng-controller="Kubernetes.TemplateController">
+  <script type="text/ng-template" id="truncatedDescriptionTag.html">
+    <a href="" ng-click="openFullDescription(template)">More...</a>
+  </script>
+
+  <div class="row">
+    <div hawtio-breadcrumbs></div>
+  </div>
+
+  <div class="row">
+    <div hawtio-tabs></div>
+  </div>
+
+
+  <div class="row filter-header">
+    <div class="col-md-12">
+      <span ng-show="model.templates.length && !formConfig">
+        <hawtio-filter ng-model="filterText"
+                       css-class="input-xxlarge"
+                       placeholder="Filter templates..."></hawtio-filter>
+      </span>
+
+      <button ng-show="formConfig" 
+        class="btn btn-success pull-right"
+        title="Click to deploy this app" 
+        ng-click="substituteAndDeployTemplate()">
+        <i class="fa fa-play-circle"></i> Run
+      </button>
+      <span class="pull-right">&nbsp;</span>
+      <button class="btn btn-info pull-right"
+              ng-click="cancel()"
+              title="Go back to app view">
+              Cancel
+      </button>
+      <span class="pull-right">&nbsp;</span>
+      <span class="pull-right">
+        Target namespace: <select ng-model="targetNamespace" ng-options="namespace for namespace in model.namespaces" title="Select the namespace to deploy these objects in">
+    </select>
+
+      </span>
+    </div>
+  </div>
+  <div class="row" ng-hide="formConfig || model.templates.length != 0">
+    <div class="col-md-12">
+      <div class="alert alert-info centered">
+        There are no templates currently available.  Add templates by dragging and dropping template files into this area.
+      </div>
+    </div>
+  </div>
+  <div class="row" ng-hide="formConfig">
+    <div class="col-md-12">
+      <div class="column-box" 
+           ng-repeat="template in model.templates | filter:filterTemplates | orderBy:'metadata.name' track by $index">
+          <div class="row">
+            <div class="col-md-2">
+              <img style="width: 64px; height: 64px;" ng-src="{{getIconUrl(template)}}">
+            </div>
+            <div class="col-md-9">
+              <h3 ng-bind="template.metadata.name"></h3>
+            </div>
+            <div class="col-md-1">
+              <a href="" ng-click="deleteTemplate(template)"><i class="fa fa-remove red"></i></a>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-10">
+              <div compile="getDescription(template)"></div>
+            </div>
+            <div class="col-md-2">
+              <a href="" 
+                 title="Click to deploy this app" 
+                 ng-click="deployTemplate(template)">
+                <i class="fa fa-play-circle green fa-3x"></i>
+              </a>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+  <div class="row" ng-show="formConfig">
+    <div class="col-md-4">
+    </div>
+    <div class="col-md-4">
+      <div hawtio-form-2="formConfig" entity="entity"></div>
+    </div>
+    <div class="col-md-4">
+    </div>
+
+  </div>
+</div>

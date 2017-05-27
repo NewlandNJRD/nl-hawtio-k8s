@@ -1,0 +1,112 @@
+<div class="row" ng-controller="Kubernetes.BuildsController">
+  <script type="text/ng-template" id="buildLinkTemplate.html">
+    <div class="ngCellText">
+      <a title="View details for this build: {{row.entity.$name}}"
+         href="{{row.entity.$viewLink}}">
+        <!--
+                <img class="app-icon-small" ng-src="{{row.entity.$iconUrl}}">
+        -->
+        {{row.entity.$shortName}}
+      </a>
+    </div>
+  </script>
+  <script type="text/ng-template" id="buildPodTemplate.html">
+    <div class="ngCellText">
+      <a title="View the pod for this build: {{row.entity.podName}}" ng-show="row.entity.$podLink"
+         href="{{row.entity.$podLink}}">
+        {{row.entity.$podShortName}}</a>
+    </div>
+  </script>
+  <script type="text/ng-template" id="buildLogsTemplate.html">
+    <div class="ngCellText">
+      <a title="View the log for this build" ng-show="row.entity.$logsLink"
+         href="{{row.entity.$logsLink}}">
+        <i class="fa fa-file-text-o"></i>  Logs
+      </a>
+    </div>
+  </script>
+  <script type="text/ng-template" id="buildRepositoryTemplate.html">
+    <div class="ngCellText">
+      <a ng-show="row.entity.parameters.source.git.uri" target="gitRepository"
+         title="View the git based source repository"
+         href="{{row.entity.parameters.source.git.uri}}">
+        {{row.entity.parameters.source.git.uri}}
+      </a>
+      <span ng-hide="row.entity.parameters.source.git.uri">
+        {{row.entity.parameters.source.git.uri}}
+      </span>
+    </div>
+  </script>
+  <script type="text/ng-template" id="buildStatusTemplate.html">
+    <div class="ngCellText" ng-switch="row.entity.status.phase">
+      <span ng-switch-when="New" class="text-primary">
+        <i class="fa fa-spin fa-spinner"></i> New
+      </span>
+      <span ng-switch-when="Pending" class="text-primary">
+        <i class="fa fa-spin fa-spinner"></i> Pending
+      </span>
+      <span ng-switch-when="Running" class="text-primary">
+        <i class="fa fa-spin fa-spinner"></i> Running
+      </span>
+      <span ng-switch-when="Complete" class="text-success">
+        <i class="fa fa-check-circle"></i> Complete
+      </span>
+      <span ng-switch-when="Failed" class="text-danger">
+        <i class="fa fa-exclamation-circle"></i> Failed
+      </span>
+      <span ng-switch-default class="text-warning">
+        <i class="fa fa-exclamation-triangle"></i> {{row.entity.status}}
+      </span>
+    </div>
+  </script>
+  <script type="text/ng-template" id="buildTimeTemplate.html">
+    <div class="ngCellText" title="built at: {{row.entity.$creationDate | date : 'h:mm:ss a, EEE MMM yyyy'}}">
+      {{row.entity.$creationDate.relative()}}
+    </div>
+  </script>
+
+
+  <div class="row">
+    <div hawtio-breadcrumbs></div>
+  </div>
+
+  <div class="row">
+    <div hawtio-tabs></div>
+  </div>
+
+  <div class="row filter-header">
+    <div class="col-md-12" >
+      <span ng-show="!id">
+        <hawtio-filter ng-show="builds.length"
+                       ng-model="tableConfig.filterOptions.filterText"
+                       css-class="input-xxlarge"
+                       placeholder="Filter builds..."></hawtio-filter>
+      </span>
+      <div class="pull-right" ng-repeat="view in buildConfig.$fabric8BuildViews | orderBy:'label'">
+        <a title="{{view.description}}" ng-show="view.url" ng-href="{{view.url}}" class="btn btn-default">
+          <i class="{{view.iconClass}}" ng-show="view.iconClass"></i>
+          {{view.label}}
+        </a>
+        <span class="pull-right" ng-show="view.url" >&nbsp;</span>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div ng-hide="fetched">
+        <div class="align-center">
+          <i class="fa fa-spinner fa-spin"></i>
+        </div>
+      </div>
+      <div ng-show="fetched">
+        <div ng-hide="builds.length" class="align-center">
+          <p class="alert alert-info">There are no builds currently running.</p>
+        </div>
+        <div ng-show="builds.length">
+          <table class="table table-condensed table-striped" ui-if="kubernetes.selectedNamespace"
+                 hawtio-simple-table="tableConfig"></table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

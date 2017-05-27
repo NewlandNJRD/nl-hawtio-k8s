@@ -1,0 +1,40 @@
+<div class="row" ng-controller="Developer.PipelineController">
+  <div class="row">
+    <div hawtio-breadcrumbs></div>
+  </div>
+
+  <div class="row">
+    <div hawtio-tabs></div>
+  </div>
+
+  <div class="row filter-header">
+    <div class="col-md-12">
+      <span>
+        <hawtio-filter ng-show="model.stages.length"
+                       ng-model="model.filterText"
+                       css-class="input-xxlarge"
+                       placeholder="Filter pipeline..."></hawtio-filter>
+      </span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div ng-hide="model.fetched">
+        <div class="align-center">
+          <i class="fa fa-spinner fa-spin"></i>
+        </div>
+      </div>
+      <div ng-show="model.fetched">
+        <div ng-hide="model.stages.length" class="align-center">
+          <p class="alert alert-info">There are no pipeline stages in this build.</p>
+        </div>
+        <div ng-show="model.stages.length">
+
+          <h2>Pipeline for {{jobId}}</h2>
+
+          <div pipeline-view></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

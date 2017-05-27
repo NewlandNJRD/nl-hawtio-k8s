@@ -1,0 +1,71 @@
+<div ng-controller="Kubernetes.ReplicationControllers">
+  <script type="text/ng-template" id="currentReplicasTemplate.html">
+    <div class="ngCellText" title="Number of running pods for this controller">
+      <a ng-show="row.entity.podsLink" href="{{row.entity.podsLink}}">
+        <span class="badge {{row.entity.status.replicas > 0 ? 'badge-success' : 'badge-warning'}}">{{row.entity.status.replicas}}</span>
+      </a>
+      <span ng-hide="row.entity.podsLink" class="badge">{{row.entity.status.replicas}}</span>
+    </div>
+  </script>
+  <script type="text/ng-template" id="desiredReplicas.html">
+    <div class="ngCellText">
+      <a href="" class="badge badge-info" 
+         ng-click="$parent.$parent.resizeDialog.open(row.entity)" 
+         title="Edit the number of replicas of this controller">{{row.entity.spec.replicas || 0}}</a>
+    </div>
+  </script>
+
+  <div class="row">
+    <div hawtio-breadcrumbs></div>
+  </div>
+
+  <div class="row">
+    <div hawtio-tabs></div>
+  </div>
+
+  <div class="row filter-header">
+    <div class="col-md-12" ng-show="model.replicationControllers.length">
+      <span ng-show="!id">
+        <hawtio-filter ng-model="tableConfig.filterOptions.filterText"
+                       css-class="input-xxlarge"
+                       placeholder="Filter replication controllers..."
+                       save-as="kubernetes-replication-controllers-text-filter"></hawtio-filter>
+      </span>
+      <button ng-show="model.fetched"
+              class="btn btn-danger pull-right"
+              ng-disabled="!id && tableConfig.selectedItems.length == 0"
+              ng-click="deletePrompt(id || tableConfig.selectedItems)">
+        <i class="fa fa-remove"></i> Delete
+      </button>
+      <span class="pull-right">&nbsp;</span>
+      <button ng-show="id"
+              class="btn btn-primary pull-right"
+              ng-click="id = undefined"><i class="fa fa-list"></i></button>
+      <span ng-show="id" class="pull-right">&nbsp;</span>
+      <a class="btn btn-default pull-right"
+         title="Create a new replication controller"
+              href="{{baseUri}}/kubernetes/namespace/{{namespace}}/replicationControllerCreate"><i class="fa fa-plus"></i> Create</a>
+      <span class="pull-right">&nbsp;</span>
+      <span ng-include="'runButton.html'"></span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div ng-hide="model.fetched">
+        <div class="align-center">
+          <i class="fa fa-spinner fa-spin"></i>
+        </div>
+      </div>
+      <div ng-show="model.fetched">
+        <div ng-hide="model.replicationControllers.length" class="align-center">
+          <p class="alert alert-info">There are no replication controllers currently available.</p>
+        </div>
+        <div ng-show="model.replicationControllers.length">
+          <table class="table table-condensed table-striped"
+                 hawtio-simple-table="tableConfig"></table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-include src="'resizeDialog.html'"/>
+</div>

@@ -1,0 +1,36 @@
+{
+  "name": "hawtio-kubernetes-api",
+  "keywords": [
+    "hawtio"
+  ],
+  "main": [
+    "dist/smokesignals.unminified.js",
+    "dist/hawtio-kubernetes-api.js"
+  ],
+  "ignore": [
+    "dist/hawtio-kubernetes-api-test.js",
+    "**/.*",
+    "node_modules",
+    "libs",
+    "plugins"
+  ],
+  "dependencies": {
+    "hawtio-core": "~2.0.0",
+    "hawtio-oauth": "~2.0.30",
+    "hawtio-utilities": "~2.0.22"
+  },
+  "devDependencies": {
+    "hawtio-core-dts": "~2.0.29"
+  },
+  "homepage": "https://github.com/hawtio/hawtio-kubernetes-api",
+  "version": "2.0.55",
+  "_release": "2.0.55",
+  "_resolution": {
+    "type": "version",
+    "tag": "v2.0.55",
+    "commit": "ca546133ed3f1bf19c768a47a0610e9386fab030"
+  },
+  "_source": "https://github.com/hawtio/hawtio-kubernetes-api.git",
+  "_target": "~2.0.0",
+  "_originalSource": "hawtio-kubernetes-api"
+}

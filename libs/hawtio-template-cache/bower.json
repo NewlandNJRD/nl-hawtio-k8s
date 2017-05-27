@@ -1,0 +1,29 @@
+{
+  "name": "hawtio-template-cache",
+  "main": [
+    "dist/hawtio-template-cache.js"
+  ],
+  "ignore": [
+    ".bowerrc",
+    ".jshintrc",
+    "node_modules",
+    "libs",
+    "gulpfile.js",
+    "karma.conf.js",
+    "index.html",
+    "package.json",
+    "templates",
+    "hawtio-template-cache.js",
+    "!dist/hawtio-template-cache.js",
+    "test"
+  ],
+  "dependencies": {
+    "hawtio-core": "~2.0.0",
+    "lodash": "~3.10.0",
+    "angular-route": "~1.5.0"
+  },
+  "devDependencies": {
+    "bootstrap": "~3.3.6",
+    "patternfly": "~2.7.0"
+  }
+}

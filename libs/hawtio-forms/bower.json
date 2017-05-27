@@ -1,0 +1,39 @@
+{
+  "name": "hawtio-forms",
+  "version": "2.0.41",
+  "keywords": [
+    "hawtio"
+  ],
+  "main": [
+    "dist/jsdiff.js",
+    "dist/hawtio-forms.js",
+    "dist/bootstrap-combobox.js",
+    "dist/hawtio-forms.css",
+    "dist/bootstrap-combobox.css"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "libs",
+    "test",
+    "tests",
+    "plugins"
+  ],
+  "dependencies": {
+    "hawtio-core": "~2.0.0",
+    "hawtio-core-navigation": "~2.0.0",
+    "hawtio-utilities": "~2.0.0",
+    "hawtio-ui": "~2.0.0"
+  },
+  "devDependencies": {
+    "bootstrap": "~3.3.6",
+    "patternfly": "~2.7.0",
+    "hawtio-core-dts": "~2.0.0",
+    "angular-mocks": "~1.3.7",
+    "hawtio-template-cache": "~2.0.2"
+  },
+  "resolutions": {
+    "angular": ">= 1.1.0 <= 1.6.0"
+  }
+}

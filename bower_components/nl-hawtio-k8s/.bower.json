@@ -1,0 +1,14 @@
+{
+  "name": "nl-hawtio-k8s",
+  "homepage": "https://github.com/NewlandNJRD/nl-hawtio-k8s",
+  "_release": "fadd9c78e2",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "fadd9c78e2f11b63577042ed2b853e79b0abe5ea"
+  },
+  "_source": "https://github.com/NewlandNJRD/nl-hawtio-k8s.git",
+  "_target": "*",
+  "_originalSource": "NewlandNJRD/nl-hawtio-k8s",
+  "_direct": true
+}

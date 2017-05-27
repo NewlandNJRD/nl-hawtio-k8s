@@ -1,0 +1,208 @@
+<script type="text/ng-template" id="runButton.html">
+  <button ng-show="model.showRunButton"
+          class="btn btn-success pull-right"
+          ng-click="viewTemplates()"
+          title="Run an application from a template">
+    <i class="fa fa-play-circle"></i> Run ...
+  </button>
+</script>
+<script type="text/ng-template" id="idTemplate.html">
+  <div class="ngCellText nowrap">
+    <a href=""
+       title="View details for {{row.entity.metadata.name || row.entity.name}}"
+       ng-href="{{row.entity | kubernetesPageLink}}">
+      <img class="app-icon-small" ng-src="{{row.entity.$iconUrl}}" ng-show="row.entity.$iconUrl">
+      {{row.entity.metadata.name || row.entity.name}}</a>
+  </div>
+</script>
+<script type="text/ng-template" id="selectorTemplate.html">
+  <div class="ngCellText">
+    <span ng-repeat="(name, value) in row.entity.spec.selector track by $index">
+      <strong>{{name}}</strong>: {{value}}
+    </span>
+  </div>
+</script>
+<script type="text/ng-template" id="podCountsAndLinkTemplate.html">
+  <div class="ngCellText" title="Number of running pods for this controller">
+    <a ng-show="row.entity.$podCounters.podsLink" href="{{row.entity.$podCounters.podsLink}}" title="View pods">
+      <span ng-show="row.entity.$podCounters.ready" class="badge badge-success">{{row.entity.$podCounters.ready}}</span>
+      <span ng-show="row.entity.$podCounters.valid" class="badge badge-info">{{row.entity.$podCounters.valid}}</span>
+      <span ng-show="row.entity.$podCounters.waiting" class="badge">{{row.entity.$podCounters.waiting}}</span>
+      <span ng-show="row.entity.$podCounters.error" class="badge badge-warning">{{row.entity.$podCounters.error}}</span>
+    </a>
+  </div>
+</script>
+<script type="text/ng-template" id="labelTemplate.html">
+  <div class="ngCellText" ng-init="entity=row.entity" ng-controller="Kubernetes.Labels">
+    <p ng-show="data"><strong>Labels</strong></p>
+    <span ng-repeat="label in labels track by $index"
+          class="pod-label badge"
+          ng-class="labelClass(label.key)"
+          ng-click="handleClick(entity, label.key, label)"
+          title="{{label.key}}">{{label.title}}</span>
+  </div>
+</script>
+<script type="text/ng-template" id="eventSourceTemplate.html">
+  <div class="ngCellText" ng-init="labels=row.entity.source">
+    <p ng-show="data"><strong>Labels</strong></p>
+    <span ng-repeat="(key, value) in labels track by $index"
+          class="pod-label badge"
+          class="background-light-grey mouse-pointer"
+          title="{{key}}"
+          ng-click="$emit('labelFilterUpdate', key + '=' + value)">{{value}}</span>
+  </div>
+</script>
+<script type="text/ng-template" id="hostTemplate.html">
+  <div class="ngCellText" ng-init="host=row.entity.$host">
+    <span class="pod-label badge"
+          class="background-light-grey mouse-pointer"
+          ng-click="$emit('labelFilterUpdate', 'host=' + host)">{{host}}</span>
+  </div>
+</script>
+<script type="text/ng-template" id="portalAddress.html">
+  <div class="ngCellText">
+    <div ng-repeat="port in row.entity.$ports track by $index">
+      <a target="_blank" href="{{row.entity.$connectUrl}}"
+         ng-show="row.entity.$connectUrl && row.entity.$podCounters.ready"
+         title="Protocol {{row.entity.spec.protocol}}">
+        {{row.entity.$host}}
+      </a>
+      <span ng-hide="row.entity.$connectUrl && row.entity.$podCounters.ready">{{row.entity.spec.portalIP || row.entity.spec.clusterIP}}:{{port}}</span>
+    </div>
+  </div>
+</script>
+<script type="text/ng-template" id="iconCellTemplate.html">
+  <div class="ngCellText">
+    <img class="app-icon-small" ng-src="{{row.entity.$iconUrl}}">
+  </div>
+</script>
+<script type="text/ng-template" id="ageTemplate.html">
+  <div class="ngCellText">
+    {{row.entity.$age}}
+  </div>
+</script>
+<script type="text/ng-template" id="firstTimestampTemplate.html">
+  <div class="ngCellText" title="{{row.entity.$firstTimestamp}}">
+    {{row.entity.$firstTimestamp.relative()}}
+  </div>
+</script>
+<script type="text/ng-template" id="lastTimestampTemplate.html">
+  <div class="ngCellText" title="{{row.entity.$lastTimestamp}}">
+    {{row.entity.$lastTimestamp.relative()}}
+  </div>
+</script>
+<script type="text/ng-template" id="eventKindTemplate.html">
+  <div class="ngCellText" ng-init="kind=row.entity.involvedObject.kind">
+    <span class="pod-label badge"
+          class="background-light-grey mouse-pointer"
+          ng-click="$emit('labelFilterUpdate', 'kind=' + kind)">{{kind}}</span>
+  </div>
+</script>
+<script type="text/ng-template" id="eventNameTemplate.html">
+  <div class="ngCellText" ng-init="name=row.entity.involvedObject.name">
+    <span class="pod-label badge"
+          class="background-light-grey mouse-pointer"
+          ng-click="$emit('labelFilterUpdate', 'name=' + name)">{{name}}</span>
+  </div>
+</script>
+<script type="text/ng-template" id="eventSummaryTemplate.html">
+  <div class="ngCellText" title="Number of events on this resource">
+    <a ng-show="row.entity.$eventsLink" href="{{row.entity.$eventsLink}}">
+      <span class="badge">{{row.entity.$events.length}}</span>
+    </a>
+  </div>
+</script>
+<script type="text/ng-template" id="connectTemplate.html">
+    <span ng-show="entity.$jolokiaUrl && entity.$ready" ng-controller="Kubernetes.ConnectController">
+      <a class="clickable"
+         ng-click="doConnect(row.entity)"
+         title="Open a new window and connect to this container">
+        <i class="fa fa-sign-in"></i>
+      </a>
+    </span>
+</script>
+<script type="text/ng-template" id="termTemplate.html">
+    <span ng-show="entity.status.phase === 'Running'" ng-controller="Kubernetes.TermController">
+      <span ng-repeat="container in entity.spec.containers" ng-show="canConnectTo(container)">
+        <i class="fa fa-television clickable" title="Open up a terminal to {{container.name}}" ng-click="openTerminal(entity.metadata.selfLink, container.name)"></i>
+      </span>
+    </span>
+</script>
+<script type="text/ng-template" id="statusTemplate.html">
+  <div class="ngCellText nowrap" ng-init="entity=row.entity" ng-controller="Kubernetes.PodStatus"
+       title="Pod {{entity.metadata.name}} is {{entity.status.phase}}">
+    <!-- in detail view -->
+    <p ng-show="data"><strong>Status: </strong></p>
+    <i class="fa {{entity.$statusCss}}"></i>
+    <span ng-show="data">{{data}}</span>
+    <!-- in table -->
+    <span ng-include="'connectTemplate.html'"></span>
+    <span ng-include="'termTemplate.html'"></span>
+  </div>
+</script>
+<script type="text/ng-template" id="resizeDialog.html">
+  <div modal="resizeDialog.dialog.show">
+    <form class="form-horizontal" ng-submit="resizeDialog.onOk()">
+      <div class="modal-header"><h4>Scale {{resizeDialog.controller.metadata.name}}</h4></div>
+      <div class="modal-body">
+        <div class="control-group">
+          <label class="control-label" for="replicas">Number of pods you would like to scale to?</label>
+
+          <div class="controls">
+            <input type="number" min="0" id="replicas" ng-model="resizeDialog.newReplicas">
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <input class="btn btn-primary" type="submit"
+               ng-disabled="resizeDialog.newReplicas === resizeDialog.controller.status.replicas"
+               value="Resize">
+        <button class="btn btn-warning cancel" type="button" ng-click="resizeDialog.close()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</script>
+<script type="text/ng-template" id="namespaceSelector.html">
+  <span ng-controller="Kubernetes.NamespaceController">
+    namespace:
+    <select ng-model="namespace" ng-options="namespace for namespace in namespaces"
+            title="choose the namespace - which is a selection of resources in kubernetes">
+    </select>
+  </span>
+</script>
+<script type="text/ng-template" id="pendingPipelines.html">
+  <div class="row" ng-controller="Developer.PipelinesController">
+    <div class="row">
+      <div class="col-md-12">
+        <div ng-hide="model.fetched">
+          <div class="align-center">
+            <i class="fa fa-spinner fa-spin"></i>
+          </div>
+        </div>
+        <div ng-show="model.fetched">
+          <div ng-hide="model.job.builds.length" class="align-center">
+            <p class="alert alert-info">There are no pipelines for this job.</p>
+          </div>
+          <div ng-show="model.job.builds.length">
+            <div class="pipeline-build-block" ng-repeat="build in model.job.builds | filter:model.filterText track by $index">
+              <div pipeline-view></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</script>
+<script type="text/ng-template" id="creationTimeTemplate.html">
+  <div class="ngCellText" title="created at: {{row.entity.$creationDate | date : 'h:mm:ss a, EEE MMM yyyy'}}">
+    {{row.entity.$creationDate.relative()}}
+  </div>
+</script>
+
+<div ng-controller="Kubernetes.TopLevel">
+  <div class="wiki-icon-view" ng-controller="Kubernetes.FileDropController" nv-file-drop nv-file-over
+       uploader="uploader" over-class="ready-drop">
+    <div class="row kubernetes-view" ng-view></div>
+  </div>
+</div>

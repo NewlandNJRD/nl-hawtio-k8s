@@ -1,0 +1,86 @@
+<div class="row" ng-controller="Kubernetes.Pods">
+  <script type="text/ng-template" id="imageTemplate.html">
+    <div class="ngCellText">
+      <!-- in table -->
+      <span ng-hide="data">
+        <span ng-repeat="container in row.entity.spec.containers">
+          <span ng-hide="container.$imageLink">{{container.image}}</span>
+          <a ng-show="container.$imageLink" target="dockerRegistry" href="{{container.$imageLink}}" title="{{container.name}}">{{container.image}}</a>
+        </span>
+      </span>
+      <!-- in detail view -->
+      <span ng-show="data">
+        <a target="dockerRegistry" ng-href="https://registry.hub.docker.com/u/{{data}}" title="{{data}}">{{data}}</a>
+      </span>
+    </div>
+  </script>
+  <script type="text/ng-template" id="configDetail.html">
+    <pre>{{data}}</pre>
+  </script>
+  <script type="text/ng-template" id="envItemTemplate.html">
+    <span ng-controller="Kubernetes.EnvItem">
+      <span class="blue">{{key}}</span>=<span class="green">{{value}}</span>
+    </span>
+  </script>
+
+
+  <div class="row">
+    <div hawtio-breadcrumbs></div>
+  </div>
+
+  <div class="row">
+    <div hawtio-tabs></div>
+  </div>
+
+  <div class="row filter-header">
+    <div class="col-md-12" ng-show="model.pods.length">
+      <span ng-show="!id">
+        <hawtio-filter ng-model="tableConfig.filterOptions.filterText"
+                       css-class="input-xxlarge"
+                       placeholder="Filter pods..."></hawtio-filter>
+      </span>
+      <button ng-show="model.fetched"
+              class="btn btn-danger pull-right"
+              ng-disabled="!id && tableConfig.selectedItems.length == 0"
+              ng-click="deletePrompt(id || tableConfig.selectedItems)">
+        <i class="fa fa-remove"></i> Delete
+      </button>
+      <span class="pull-right">&nbsp;</span>
+      <button ng-show="id"
+              class="btn btn-primary pull-right"
+              ng-click="id = undefined"><i class="fa fa-list"></i></button>
+      <span class="pull-right">&nbsp;</span>
+      <button ng-show="hasServiceKibana()"
+              class="btn btn-primary pull-right"
+              title="View the logs for the selected pods"
+              ng-disabled="!id && tableConfig.selectedItems.length == 0"
+              ng-click="openLogs()">
+        <i class="fa fa-file-text-o"></i> Logs
+      </button>
+      <span ng-show="hasServiceKibana()" class="pull-right">&nbsp;</span>
+      <a class="btn btn-default pull-right"
+         title="Create a new pod"
+              href="{{baseUri}}/kubernetes/namespace/{{namespace}}/podCreate"><i class="fa fa-plus"></i> Create</a>
+      <span class="pull-right">&nbsp;</span>
+      <span ng-include="'runButton.html'"></span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div ng-hide="model.fetched">
+        <div class="align-center">
+          <i class="fa fa-spinner fa-spin"></i>
+        </div>
+      </div>
+      <div ng-show="model.fetched">
+        <div ng-hide="model.pods.length" class="align-center">
+          <p class="alert alert-info">There are no pods currently running.</p>
+        </div>
+        <div ng-show="model.pods.length">
+          <table class="table table-condensed table-striped" ui-if="kubernetes.selectedNamespace"
+                 hawtio-simple-table="tableConfig"></table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

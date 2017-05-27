@@ -1,0 +1,47 @@
+{
+  "name": "hawtio-oauth",
+  "keywords": [
+    "hawtio"
+  ],
+  "main": [
+    "dist/hawtio-oauth.js"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "libs",
+    "test",
+    "tests",
+    "plugins"
+  ],
+  "dependencies": {
+    "angular": "~1.5.0",
+    "hawtio-core": "~2.0.0",
+    "hawtio-utilities": "~2.0.0",
+    "ng-idle": "~1.0.4",
+    "keycloak": "^2.3.0"
+  },
+  "devDependencies": {
+    "hawtio-core-dts": "~2.0.0",
+    "angular-mocks": "~1.5.0",
+    "hawtio-extension-service": "~2.0.2",
+    "hawtio-core-navigation": "~2.0.0",
+    "hawtio-preferences": "~2.0.4",
+    "hawtio-forms": "~2.0.27"
+  },
+  "resolutions": {
+    "jquery": "~2.1.0"
+  },
+  "homepage": "https://github.com/hawtio/hawtio-oauth",
+  "version": "2.0.52",
+  "_release": "2.0.52",
+  "_resolution": {
+    "type": "version",
+    "tag": "v2.0.52",
+    "commit": "5a6d9df010693b06a4454b1050c616de9484e3bf"
+  },
+  "_source": "https://github.com/hawtio/hawtio-oauth.git",
+  "_target": "~2.0.21",
+  "_originalSource": "hawtio-oauth"
+}

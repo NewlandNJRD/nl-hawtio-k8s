@@ -1,0 +1,62 @@
+<div ng-controller="Kubernetes.ServiceController">
+  <div class="row">
+    <div hawtio-breadcrumbs></div>
+  </div>
+
+  <div class="row">
+    <div hawtio-tabs></div>
+  </div>
+
+  <div class="row row-header">
+    <div class="col-md-12">
+      <span ng-show="model.fetched && !rawMode" class="icon-heading">
+          <img ng-show="item.$iconUrl" class="icon-selected-app" ng-src="{{item.$iconUrl}}">&nbsp;{{item.metadata.name}}
+      </span>
+
+      <button class="btn btn-danger pull-right"
+              title="Delete this Service"
+              ng-click="deleteEntity()">
+        <i class="fa fa-remove"></i> Delete
+      </button>
+      <span class="pull-right">&nbsp;</span>
+
+      <a class="btn btn-default pull-right"
+              href="{{baseUri}}/kubernetes/services?namespace={{item.metadata.namespace}}"><i class="fa fa-list"></i></a>
+
+      <a class="btn pull-right"
+         ng-click="flipRaw()"
+         title="{{rawMode ? 'Raw mode' : 'Form mode'}}">{{rawMode ? 'From' : 'Raw'}}</a>
+      <span class="pull-right">&nbsp;</span>
+
+      <a class="btn btn-primary pull-right"
+         title="Open this service in your browser"
+         ng-show="item.$connectUrl" href="{{item.$connectUrl}}">
+        <i class="fa fa-sign-in"></i> Connect
+      </a>
+    </div>
+  </div>
+
+  <div ng-hide="model.fetched">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="align-center">
+          <i class="fa fa-spinner fa-spin"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div ng-show="model.fetched && !rawMode">
+    <div class="row">
+      <div class="col-md-12">
+        <div hawtio-object="item" config="itemConfig"></div>
+      </div>
+    </div>
+  </div>
+
+  <div ng-show="model.fetched && rawMode">
+    <div class="raw-json-view">
+      <textarea ui-codemirror="codeMirrorOptions" readonly="true" ng-model="rawModel" class="raw-json-view"></textarea>
+    </div>
+  </div>
+
+</div>

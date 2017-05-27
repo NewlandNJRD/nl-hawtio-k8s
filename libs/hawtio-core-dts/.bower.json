@@ -1,0 +1,20 @@
+{
+  "name": "hawtio-core-dts",
+  "version": "2.0.29",
+  "description": "Collection of d.ts files for hawtio plugins written with typescript",
+  "keywords": [
+    "hawtio",
+    "typescript"
+  ],
+  "license": "ASL 2.0",
+  "homepage": "http://hawt.io",
+  "_release": "2.0.29",
+  "_resolution": {
+    "type": "version",
+    "tag": "v2.0.29",
+    "commit": "8e935faefb5692e9f9bcde3d06833bddf47907f8"
+  },
+  "_source": "https://github.com/hawtio/hawtio-core-dts.git",
+  "_target": "~2.0.0",
+  "_originalSource": "hawtio-core-dts"
+}

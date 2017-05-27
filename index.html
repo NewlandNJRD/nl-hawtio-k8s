@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>hawtio-kubernetes</title>
+    <base href='/'></base>
+    <meta charset="UTF8" />
+
+    <link rel="stylesheet" href="libs/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="libs/patternfly/dist/css/patternfly.css" />
+
+    <!-- bower:css -->
+    <link rel="stylesheet" href="libs/nvd3/build/nv.d3.css" />
+    <link rel="stylesheet" href="libs/codemirror/lib/codemirror.css" />
+    <link rel="stylesheet" href="libs/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css" />
+    <link rel="stylesheet" href="libs/bootstrap-select/dist/css/bootstrap-select.css" />
+    <link rel="stylesheet" href="libs/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css" />
+    <link rel="stylesheet" href="libs/bootstrap-touchspin/src/jquery.bootstrap-touchspin.css" />
+    <link rel="stylesheet" href="libs/c3/c3.css" />
+    <link rel="stylesheet" href="libs/datatables/media/css/jquery.dataTables.css" />
+    <link rel="stylesheet" href="libs/datatables-colvis/css/dataTables.colVis.css" />
+    <link rel="stylesheet" href="libs/google-code-prettify/bin/prettify.min.css" />
+    <link rel="stylesheet" href="libs/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />
+    <link rel="stylesheet" href="libs/patternfly-bootstrap-combobox/css/bootstrap-combobox.css" />
+    <link rel="stylesheet" href="libs/patternfly/dist/css/patternfly-additions.css" />
+    <link rel="stylesheet" href="libs/toastr/toastr.css" />
+    <link rel="stylesheet" href="libs/hawtio-ui/dist/hawtio-ui.css" />
+    <link rel="stylesheet" href="libs/hawtio-forms/dist/hawtio-forms.css" />
+    <link rel="stylesheet" href="libs/hawtio-forms/dist/bootstrap-combobox.css" />
+    <link rel="stylesheet" href="libs/kubernetes-container-terminal/dist/container-terminal.css" />
+    <!-- endbower -->
+
+    <link rel="stylesheet" href="dist/hawtio-kubernetes.css" />
+
+    <!-- ES6/ES6 shim -->
+    <!--[if IE 8]>
+    <script src="libs/es5-dom-shim/__COMIPLE/a.ie8.js"></script>
+    <![endif]-->
+    <script src="libs/es5-dom-shim/__COMPILE/a.js"></script>
+
+    <!-- bower:js -->
+    <script src="libs/jquery/dist/jquery.js"></script>
+    <script src="libs/angular/angular.js"></script>
+    <script src="libs/d3/d3.js"></script>
+    <script src="libs/angular-nvd3/dist/angular-nvd3.js"></script>
+    <script src="libs/angular-resource/angular-resource.js"></script>
+    <script src="libs/codemirror/lib/codemirror.js"></script>
+    <script src="libs/angular-ui-codemirror/ui-codemirror.js"></script>
+    <script src="libs/angular-ui-validate/dist/validate.js"></script>
+    <script src="libs/angularjs-scroll-glue/src/scrollglue.js"></script>
+    <script src="libs/angular-sanitize/angular-sanitize.js"></script>
+    <script src="libs/js-logger/src/logger.js"></script>
+    <script src="libs/hawtio-core/dist/hawtio-core.js"></script>
+    <script src="libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    <script src="libs/bootstrap-select/dist/js/bootstrap-select.js"></script>
+    <script src="libs/bootstrap-switch/dist/js/bootstrap-switch.js"></script>
+    <script src="libs/bootstrap-touchspin/src/jquery.bootstrap-touchspin.js"></script>
+    <script src="libs/c3/c3.js"></script>
+    <script src="libs/datatables/media/js/jquery.dataTables.js"></script>
+    <script src="libs/datatables-colreorder/js/dataTables.colReorder.js"></script>
+    <script src="libs/datatables-colvis/js/dataTables.colVis.js"></script>
+    <script src="libs/google-code-prettify/bin/prettify.min.js"></script>
+    <script src="libs/matchHeight/dist/jquery.matchHeight.js"></script>
+    <script src="libs/moment/moment.js"></script>
+    <script src="libs/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="libs/patternfly-bootstrap-combobox/js/bootstrap-combobox.js"></script>
+    <script src="libs/patternfly-bootstrap-treeview/dist/bootstrap-treeview.js"></script>
+    <script src="libs/lodash/lodash.js"></script>
+    <script src="libs/angular-route/angular-route.js"></script>
+    <script src="libs/urijs/src/URI.js"></script>
+    <script src="libs/hawtio-core-navigation/dist/hawtio-core-navigation.js"></script>
+    <script src="libs/human-date/humandate.js"></script>
+    <script src="libs/humanize-duration/humanize-duration.js"></script>
+    <script src="libs/hawtio-utilities/dist/angular-file-upload.js"></script>
+    <script src="libs/hawtio-utilities/dist/hawtio-utilities.js"></script>
+    <script src="libs/graphlib/dist/graphlib.core.js"></script>
+    <script src="libs/dagre/dist/dagre.core.js"></script>
+    <script src="libs/dagre/dist/dagre.core.min.js"></script>
+    <script src="libs/zeroclipboard/dist/ZeroClipboard.js"></script>
+    <script src="libs/toastr/toastr.js"></script>
+    <script src="libs/jquery-ui/jquery-ui.js"></script>
+    <script src="libs/jquery.dynatree/dist/jquery.dynatree.js"></script>
+    <script src="libs/marked/lib/marked.js"></script>
+    <script src="libs/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="libs/hawtio-ui/dist/hawtio-ui.js"></script>
+    <script src="libs/hawtio-forms/dist/jsdiff.js"></script>
+    <script src="libs/hawtio-forms/dist/hawtio-forms.js"></script>
+    <script src="libs/hawtio-forms/dist/bootstrap-combobox.js"></script>
+    <script src="libs/ng-idle/angular-idle.js"></script>
+    <script src="libs/keycloak/dist/keycloak.js"></script>
+    <script src="libs/hawtio-oauth/dist/hawtio-oauth.js"></script>
+    <script src="libs/hawtio-template-cache/dist/hawtio-template-cache.js"></script>
+    <script src="libs/term.js/src/term.js"></script>
+    <script src="libs/kubernetes-container-terminal/dist/container-terminal.js"></script>
+    <script src="libs/hawtio-kubernetes-api/dist/smokesignals.unminified.js"></script>
+    <script src="libs/hawtio-kubernetes-api/dist/hawtio-kubernetes-api.js"></script>
+    <!-- endbower -->
+
+    <script type="text/javascript" src="libs/codemirror/addon/edit/closetag.js"></script>
+    <script type="text/javascript" src="libs/codemirror/addon/edit/continuelist.js"></script>
+    <script type="text/javascript" src="libs/codemirror/addon/edit/matchbrackets.js"></script>
+    <script type="text/javascript" src="libs/codemirror/addon/fold/foldcode.js"></script>
+    <script type="text/javascript" src="libs/codemirror/addon/fold/brace-fold.js"></script>
+    <script type="text/javascript" src="libs/codemirror/addon/fold/xml-fold.js"></script>
+    <script type="text/javascript" src="libs/codemirror/mode/javascript/javascript.js"></script>
+    <script type="text/javascript" src="libs/codemirror/mode/xml/xml.js"></script>
+    <script type="text/javascript" src="libs/codemirror/mode/css/css.js"></script>
+    <script type="text/javascript" src="libs/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+    <script type="text/javascript" src="libs/codemirror/mode/markdown/markdown.js"></script>
+    <script type="text/javascript" src="libs/codemirror/mode/diff/diff.js"></script>
+    <script type="text/javascript" src="libs/codemirror/mode/properties/properties.js"></script>
+    <script type="text/javascript" src="libs/codemirror/mode/clike/clike.js"></script>
+    <script type="text/javascript" src="libs/codemirror/mode/yaml/yaml.js"></script>
+
+
+    <script src="libs/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="libs/patternfly/dist/js/patternfly.js"></script>
+    <script src="libs/hawtio-extension-service/dist/hawtio-extension-service.js"></script>
+    <script src="libs/hawtio-preferences/dist/hawtio-preferences.js"></script>
+
+    <!-- NOTE we need to make sure this is loaded much later than d3.js! -->
+    <script src="libs/nvd3/build/nv.d3.js"></script>
+
+    <style>
+      .navbar-brand > img {
+        height: 20px;
+        margin-top: -5px;
+        margin-bottom: -5px;
+      }
+
+      body {
+        /* overwrite a top-padding from site-base.css in hawtio-ui */
+        padding-top: inherit;
+      }
+      .breadcrumb {
+        /* overwrite the bottom padding from pf's breadcrumb class */
+        margin-bottom: 0;
+      }
+      .wiki-icon-view {
+        border-radius: 0;
+        border: none;
+      }
+      .kubernetes-view .row.filter-header {
+        margin-top: 1em;
+      }
+    </style>
+
+  </head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-pf" role="navigation">
+      <div class="navbar-header" hawtio-extension name="hawtio-header">
+        <a class="navbar-brand" href="/"><img src="img/hawtio_logo.svg"></a>
+      </div>
+      <ul class="nav navbar-nav navbar-utility">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <span class="pficon pficon-user"></span>
+            User <b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu" hawtio-extension name="hawtio-user">
+          </ul>
+        </li>
+      </ul>
+    </nav>
+
+    <div id="main" class="container-fluid ng-cloak" ng-controller="HawtioNav.ViewController">
+      <div ng-include src="viewPartial"></div>
+    </div>
+
+    <div hawtio-extension name="hawtio-global"></div>
+
+    <script src="dist/hawtio-kubernetes.js"></script>
+
+  </body>
+</html>

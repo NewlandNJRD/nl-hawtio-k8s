@@ -1,0 +1,67 @@
+<div class="row" ng-controller="Kubernetes.DeploymentConfigsController">
+  <script type="text/ng-template" id="deploymentConfigLinkTemplate.html">
+    <div class="ngCellText">
+      <a title="View details for this build configuration"
+         href="{{baseUri}}/kubernetes/deploymentConfigs/{{row.entity.metadata.name}}">
+<!--
+        <img class="app-icon-small" ng-src="{{row.entity.$iconUrl}}">
+-->
+        {{row.entity.metadata.name}}</a>
+    </div>
+  </script>
+  <script type="text/ng-template" id="deploymentConfigLabelTemplate.html">
+    <div class="ngCellText">
+      <span ng-repeat="(key, label) in row.entity.template.controllerTemplate.template.metadata.labels track by $index"
+            class="pod-label badge"
+            ng-class="labelClass(key)"
+            ng-click="clickTag(entity, key, label)"
+            title="{{key}}">{{label}}</span>
+    </div>
+  </script>
+  <div class="row filter-header">
+    <div class="col-md-12">
+      <span>
+        <hawtio-filter ng-show="deploymentConfigs.length"
+                       ng-model="tableConfig.filterOptions.filterText"
+                       css-class="input-xxlarge"
+                       placeholder="Filter deployment configurations..."></hawtio-filter>
+      </span>
+      <button ng-show="fetched && deploymentConfigs.length"
+              title="Delete the selected build configuration"
+              class="btn btn-danger pull-right"
+              ng-disabled="tableConfig.selectedItems.length == 0"
+              ng-click="deletePrompt(tableConfig.selectedItems)">
+        <i class="fa fa-remove"></i> Delete
+      </button>
+      <span class="pull-right">&nbsp;</span>
+      <a class="btn btn-default pull-right"
+         title="Create a new build configuration"
+         href="{{baseUri}}/kubernetes/buildConfigCreate"><i class="fa fa-plus"></i> Create</a>
+      <span class="pull-right">&nbsp;</span>
+      <button class="btn btn-primary pull-right"
+         ng-show="fetched && deploymentConfigs.length"
+         title="Trigger the given build"
+         ng-disabled="tableConfig.selectedItems.length != 1 || !tableConfig.selectedItems[0].$triggerUrl"
+         ng-click="triggerBuild(tableConfig.selectedItems[0])"><i class="fa fa-play-circle-o"></i> Trigger</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div ng-hide="fetched">
+        <div class="align-center">
+          <i class="fa fa-spinner fa-spin"></i>
+        </div>
+      </div>
+      <div ng-show="fetched">
+        <div ng-hide="deploymentConfigs.length" class="align-center">
+          <p class="alert alert-info">There are no deployment configurations available.</p>
+          <a class="btn btn-primary" href="{{baseUri}}/kubernetes/deploymentConfigCreate"><i class="fa fa-plus"></i> Create Deployment Configuration</a>
+        </div>
+        <div ng-show="deploymentConfigs.length">
+          <table class="table table-condensed table-striped" ui-if="kubernetes.selectedNamespace"
+                 hawtio-simple-table="tableConfig"></table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

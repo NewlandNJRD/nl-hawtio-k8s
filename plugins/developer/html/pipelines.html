@@ -1,0 +1,49 @@
+<div class="row" ng-controller="Developer.PipelinesController">
+  <div class="row">
+    <div hawtio-breadcrumbs></div>
+  </div>
+
+  <div class="row">
+    <div hawtio-tabs></div>
+  </div>
+
+  <div class="row filter-header">
+    <div class="col-md-4">
+      <span>
+        <hawtio-filter ng-show="model.job.builds.length"
+                       ng-model="model.filterText"
+                       css-class="input-xxlarge"
+                       placeholder="Filter pipelines..."></hawtio-filter>
+      </span>
+    </div>
+    <div class="col-md-4">
+      <form class="form-inline">
+        <div class="checkbox" title="Only show build pipelines which are pending">
+          <label>
+            <input type="checkbox" ng-model="model.pendingOnly"> &nbsp;Only pending builds
+          </label>
+        </div>
+      </form>
+
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div ng-hide="model.fetched">
+        <div class="align-center">
+          <i class="fa fa-spinner fa-spin"></i>
+        </div>
+      </div>
+      <div ng-show="model.fetched">
+        <div ng-hide="model.job.builds.length" class="align-center">
+          <p class="alert alert-info">There are no pipelines for this job.</p>
+        </div>
+        <div ng-show="model.job.builds.length">
+          <div class="pipeline-build-block" ng-repeat="build in model.job.builds | filter:model.filterText track by $index">
+            <div pipeline-view></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
