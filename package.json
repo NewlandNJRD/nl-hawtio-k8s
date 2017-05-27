@@ -1,5 +1,5 @@
 {
-  "name": "hawtio-kubernetes",
+  "name": "nl-hawtio-k8s",
   "version": "2.0.0",
   "devDependencies": {
     "URIjs": "^1.14.1",
